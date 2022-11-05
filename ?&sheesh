@@ -1,0 +1,71 @@
+local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
+
+if game.PlaceId == 155615604 then
+    local PRLwin = Flux:Window("MAMBA HUB", "Prison Life", Color3.fromRGB(0, 140, 0), Enum.KeyCode.RightShift)
+    local PRLMain = PRLwin:Tab("Main", "http://www.roblox.com/asset/?id=6023426915")
+PRLMain:Slider("WalkSpeed", "Change your Walk Speed", 0, 250,16,function(t)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (t)
+end)
+PRLMain:Slider("JumpPower", "Change your Jump Power", 0, 200,50,function(t)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = (t)
+end)
+PRLMain:Button("Kill All", "Use it only as a last resort, because you won't be able to turn it off.", function()
+        while wait(0.1) do
+            for i, v in next, game:GetService("Players"):GetChildren() do
+            pcall(function()
+            if v~= game:GetService("Players").LocalPlayer and not v.Character:FindFirstChildOfClass("ForceField") and v.Character.Humanoid.Health > 0 then
+            while v.Character:WaitForChild("Humanoid").Health > 0 do
+            wait();
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame;
+            for x, c in next, game:GetService("Players"):GetChildren() do
+            if c ~= game:GetService("Players").LocalPlayer then game.ReplicatedStorage.meleeEvent:FireServer(c) end
+            end
+            end
+            end
+            end)
+            wait()
+            end
+            end
+            end)
+    local PRLGuns = PRLwin:Tab("Guns", "http://www.roblox.com/asset/?id=6022668888")
+PRLGuns:Dropdown("Gun Giver", {"M9","AK-47","Remington 870"}, function(t)
+    local A_1 = game:GetService("Workspace")["Prison_ITEMS"].giver[t].ITEMPICKUP
+    local Event = game:GetService("Workspace").Remote.ItemHandler
+    Event:InvokeServer(A_1)
+end)
+    PRLGuns:Dropdown("OP Gun", {"M9","AK-47","Remington 870"}, function(t)
+        local module = nil
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(t) then
+        module = require(game.GetService("Players").LocalPlayer.Backpack[t].GunFunctions)
+    elseif game:GetService("Players").LocalPlayer.Character:FindFirstChild(t) then
+        module = require(game.GetService("Players").LocalPlayer.Character[t].GunFunctions)
+    end
+    if module ~= nil then
+        module["MaxAmmo"] = math.huge
+        module["CurrentAmmo"] = math.huge
+        module["StoredAmmo"] = math.huge
+        module["FireRate"] = 0.000001
+        module["Spread"] = 0
+        module["Range"] = math.huge
+        module["Bullets"] = 10
+        module["ReloadTime"] = 0.000001
+        module["AutoFire"] = true
+    end
+end)
+
+elseif game.PlaceId == 11142132921 then
+    local MCSwin = Flux:Window("MAMBA HUB", "Main Clicker Simulator", Color3.fromRGB(0, 140, 0), Enum.KeyCode.RightShift)
+    local MCSMain = MCSwin:Tab("Main", "http://www.roblox.com/asset/?id=6023426915")
+MCSMain:Slider("WalkSpeed", "Change your Walk Speed", 0, 250,16,function(t)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (t)
+end)
+    local MCSAutoFarm = MCSwin:Tab("AutoFarm", "http://www.roblox.com/asset/?id=6035078903")
+MCSAutoFarm:Button("Auto-Farm Mega Clicks", "Automatically click Mega Click with no CD", function()
+    while wait(0.01) do
+        game.ReplicatedStorage.MegaClicks:FireServer()
+    end
+end)
+MCSAutoFarm:Dropdown("Free Hatch Eggs", {"HalloweenEgg","HalloweenEgg2"}, function(t)
+    game.ReplicatedStorage.ServerEvents.hatchEgg:FireServer(0, workspace.EventEggs[t], "Single")
+end)
+end
