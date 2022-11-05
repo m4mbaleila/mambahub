@@ -33,24 +33,21 @@ PRLGuns:Dropdown("Gun Giver", {"M9","AK-47","Remington 870"}, function(t)
     local Event = game:GetService("Workspace").Remote.ItemHandler
     Event:InvokeServer(A_1)
 end)
-    PRLGuns:Dropdown("OP Gun", {"M9","AK-47","Remington 870"}, function(t)
-        local module = nil
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(t) then
-        module = require(game.GetService("Players").LocalPlayer.Backpack[t].GunFunctions)
-    elseif game:GetService("Players").LocalPlayer.Character:FindFirstChild(t) then
-        module = require(game.GetService("Players").LocalPlayer.Character[t].GunFunctions)
-    end
-    if module ~= nil then
-        module["MaxAmmo"] = math.huge
-        module["CurrentAmmo"] = math.huge
-        module["StoredAmmo"] = math.huge
-        module["FireRate"] = 0.000001
-        module["Spread"] = 0
-        module["Range"] = math.huge
-        module["Bullets"] = 10
-        module["ReloadTime"] = 0.000001
-        module["AutoFire"] = true
-    end
+PRLGuns:Button("OP GUN", "equip your weapon before pressing the button", function()
+    local player = game:GetService("Players").LocalPlayer; local char = player.Character
+    local gun = char:FindFirstChildOfClass("Tool")
+    local g = require(gun:FindFirstChild("GunStates"))
+
+    g.Damage = 100 -- Damage per bullet
+    g.MaxAmmo = math.huge -- just keep this at math.huge
+    g.CurrentAmmo = math.huge -- just keep this at math.huge
+    g.StoredAmmo = math.huge -- just keep this at math.huge
+    g.FireRate = 0.01 -- 1 = slow fire time (1 second), 0.01 = very fast fire time (.01 second)
+    g.AutoFire = true -- true = automatic / false = semiautomatic
+    g.Range = math.huge -- The distance your bullets can travel
+    g.Spread = 0 -- Bullet spread, 0 = no spread, 10 = lol, spread
+    g.ReloadTime = 0 -- Seconds it takes to relaod
+    g.Bullets = 25 -- Bullets per shot
 end)
 
 elseif game.PlaceId == 11142132921 then
