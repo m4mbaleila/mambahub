@@ -1,5 +1,6 @@
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
 
+-- Prison Life
 if game.PlaceId == 155615604 then
     local PRLwin = Flux:Window("MAMBA HUB", "Prison Life", Color3.fromRGB(0, 140, 0), Enum.KeyCode.RightShift)
     local PRLMain = PRLwin:Tab("Main", "http://www.roblox.com/asset/?id=6023426915")
@@ -50,6 +51,7 @@ PRLGuns:Button("OP GUN", "equip your weapon before pressing the button", functio
     g.Bullets = 25 -- Bullets per shot
 end)
 
+-- Main Clicker Simulator
 elseif game.PlaceId == 11142132921 then
     local MCSwin = Flux:Window("MAMBA HUB", "Main Clicker Simulator", Color3.fromRGB(0, 140, 0), Enum.KeyCode.RightShift)
     local MCSMain = MCSwin:Tab("Main", "http://www.roblox.com/asset/?id=6023426915")
@@ -64,5 +66,61 @@ MCSAutoFarm:Button("Auto-Farm Mega Clicks", "Automatically click Mega Click with
 end)
 MCSAutoFarm:Dropdown("Free Hatch Eggs", {"HalloweenEgg","HalloweenEgg2"}, function(t)
     game.ReplicatedStorage.ServerEvents.hatchEgg:FireServer(0, workspace.EventEggs[t], "Single")
+end)
+
+-- Cheese Escape
+elseif game.PlaceId == 5777099015 then
+    local CEwin = Flux:Window("MAMBA HUB", "Cheese Escape", Color3.fromRGB(0, 140, 0), Enum.KeyCode.RightShift)
+    local CEMain = CEwin:Tab("Main", "http://www.roblox.com/asset/?id=6023426915")
+CEMain:Slider("WalkSpeed", "Change your Walk Speed", 0, 250,16,function(t)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (t)
+end)
+CEMain:Slider("JumpPower", "Change your Jump Power", 0, 200,50,function(t)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = (t)
+end)
+CEMain:Button("Give 1 Cheese", "Gives you one cheese", function()
+    local Event = game:GetService("ReplicatedStorage").AddCheese
+    Event:FireServer()
+end)
+CEMain:Button("Mouse ESP", "Ability to see the mouse through walls", function()
+    for __,v in pairs(game.Workspace.Mouse.Mouse:GetChildren()) do
+        if v:IsA("Model") or v:IsA("Part") or v:IsA("MeshPart") then
+        local a = Instance.new("BillboardGui",v)
+        a.Size = UDim2.new(1,0, 1,0)
+        a.Name = "A"
+        a.AlwaysOnTop = true
+        local b = Instance.new("Frame",a)
+        b.Size = UDim2.new(1,0, 1,0)
+        b.BackgroundTransparency = 1
+        b.BorderSizePixel = 0
+        local c = Instance.new("TextLabel",b)
+        c.Text = v.Name
+        c.Size = UDim2.new(1,0, 1,0)
+        c.BackgroundTransparency = 1
+        c.BorderSizePixel = 0
+        end
+    end
+end)
+CEMain:Button("Cheese ESP", "Ability to see cheese through walls", function()
+    for __,v in pairs(game.Workspace.FindCheese:GetChildren()) do
+        if v:IsA("Model") or v:IsA("Part") or v:IsA("MeshPart") then
+        local a = Instance.new("BillboardGui",v)
+        a.Size = UDim2.new(1,0, 1,0)
+        a.Name = "A"
+        a.AlwaysOnTop = true
+        local b = Instance.new("Frame",a)
+        b.Size = UDim2.new(1,0, 1,0)
+        b.BackgroundTransparency = 1
+        b.BorderSizePixel = 0
+        local c = Instance.new("TextLabel",b)
+        c.Text = v.Name
+        c.Size = UDim2.new(1,0, 1,0)
+        c.BackgroundTransparency = 1
+        c.BorderSizePixel = 0
+        end
+    end
+end)
+CEMain:Button("Full Bright", "Makes the game bright", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))()
 end)
 end
