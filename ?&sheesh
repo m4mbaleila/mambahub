@@ -123,4 +123,286 @@ end)
 CEMain:Button("Full Bright", "Makes the game bright", function()
     loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))()
 end)
+
+-- JailBreak
+elseif game.PlaceId == 606849621 then
+    local JBwin = Flux:Window("MAMBA HUB", "Jailbreak", Color3.fromRGB(0, 140, 0), Enum.KeyCode.RightShift)
+    local JBMain = JBwin:Tab("Main", "http://www.roblox.com/asset/?id=6023426915")
+JBMain:Slider("WalkSpeed", "Change your Walk Speed", 0, 250,16,function(t)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (t)
+end)
+JBMain:Slider("JumpPower", "Change your Jump Power", 0, 250,16,function(t)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = (t)
+end)
+JBMain:Button("Infinity Jump", "F to toggle", function()
+    _G.infinjump = true   
+    local Player = game:GetService("Players").LocalPlayer 
+    local Mouse = Player:GetMouse() 
+    Mouse.KeyDown:connect(function(k) 
+        if _G.infinjump then if k:byte() == 32 then 
+            Humanoid = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid") 
+            Humanoid:ChangeState("Jumping") wait(0.1) Humanoid:ChangeState("Seated")
+        end 
+    end
+end)   
+local Player = game:GetService("Players").LocalPlayer
+local Mouse = Player:GetMouse()
+Mouse.KeyDown:connect(function(k) k = k:lower()
+    if k == "f" then if _G.infinjump == true then
+        _G.infinjump = false
+    else _G.infinjump = true 
+    end 
+end
+end)
+end)
+    local JBGun = JBwin:Tab("Gun Modes", "http://www.roblox.com/asset/?id=6035078903")
+JBGun:Button("Silent Aim", "Hit everyone without difficulty", function()
+    --/ max distance is 600 studs
+getgenv().toggled = true --/ true & false
+getgenv().old = getgenv().old or require(game:GetService("ReplicatedStorage").Module.RayCast).RayIgnoreNonCollideWithIgnoreList
+if getgenv().toggled then
+require(game:GetService("ReplicatedStorage").Module.RayCast).RayIgnoreNonCollideWithIgnoreList = function(...)
+local nearestDistance, nearestEnemy = 600, nil
+for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+if v.Team ~= game:GetService("Players").LocalPlayer.Team and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+if (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < nearestDistance then
+nearestDistance, nearestEnemy = (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude, v
+end
+end
+end
+local arg = {old(...)}
+if (tostring(getfenv(2).script) == "BulletEmitter" or tostring(getfenv(2).script) == "Taser") and nearestEnemy then
+arg[1] = nearestEnemy.Character.HumanoidRootPart
+arg[2] = nearestEnemy.Character.HumanoidRootPart.Position
+end
+return unpack(arg)
+end
+else
+require(game:GetService("ReplicatedStorage").Module.RayCast).RayIgnoreNonCollideWithIgnoreList = getgenv().old
+end
+end)
+
+-- DOORS
+elseif game.PlaceId == 6839171747 then
+    local notifications = loadstring(game:HttpGet(("https://raw.githubusercontent.com/AbstractPoo/Main/main/Notifications.lua"),true))()
+    local keyrange, leverrange, lockpickrange, bookrange, bandagerange, lighterrange, flashlightrange = 15, 15, 15, 15, 15, 15, 15
+
+    local bullshittable = {KeyObtain = {}, LeverForGate = {},LiveHintBook = {}}
+    local prompttable = {"KeyObtain", "LeverForGate", "LiveHintBook",}
+
+task.spawn(function()
+    game.Workspace.ChildAdded:Connect(function(v)
+        if v:IsA("Model") then
+            notifications:notify{
+                Title = "â ï¸Monster Spawnedâ ï¸",
+                Description = v.Name.. " spawned!",
+                Accept = {
+                    Text = "OK"
+                },
+                Length = 5
+            }
+            task.wait(5)
+        end
+    end)
+end)
+
+local function outline(dad)
+    local esp = Instance.new("Highlight")
+    esp.Name = "Outline"
+    esp.FillTransparency = 1
+    esp.FillColor = Color3.new(1, 0.666667, 0)
+    esp.OutlineColor = Color3.new(255,0,0)
+    esp.OutlineTransparency = 0
+    esp.Parent = dad
+end
+
+function getbullshit()
+    local function getname(a)
+        return bullshittable[a.Parent.Name]
+    end
+
+    local function checkifstillthere(a)
+        for _,v in pairs(a) do
+            if v.Parent == nil then
+                table.remove(a, i)
+            end
+        end
+    end
+
+    while task.wait(1) do
+        for _,v in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do 
+            if v:IsA("ProximityPrompt") and table.find(prompttable, v.Parent.Name) then
+                 table.insert(getname(v), v)
+            end
+        end
+
+        for _,v in pairs(bullshittable) do
+            checkifstillthere(v)
+        end
+    end
+end
+coroutine.wrap(getbullshit)()
+
+local DRwin = Flux:Window("MAMBA HUB", "DOORS", Color3.fromRGB(0, 140, 0), Enum.KeyCode.RightShift)
+local DRMain = DRwin:Tab("Main", "http://www.roblox.com/asset/?id=6023426915")
+local pickupaura
+DRMain:Toggle("Key Aura", "DIsfoidsigre", function(t)
+pickupaura = t
+    repeat task.wait(.5)
+        for _,v in pairs(bullshittable.KeyObtain) do
+            pcall(function()
+                local mag = (lplr.Character.HumanoidRootPart.Position - v.Parent.Hitbox.Position).magnitude
+                if mag < keyrange then 
+                    fireproximityprompt(v)
+                end
+            end)
+        end
+    until not pickupaura 
+end)
+
+local leveraura
+DRMain:Toggle("Lever Aura", "DIsfoidsigre", function(t)
+leveraura = t
+    repeat task.wait(.5)
+        for _,v in pairs(bullshittable.LeverForGate) do
+            pcall(function()
+                local mag = (lplr.Character.HumanoidRootPart.Position - v.Parent.Main.Position).magnitude
+                if mag < leverrange then 
+                    fireproximityprompt(v)
+                end
+            end)
+        end
+    until not leveraura
+end)
+
+local bookaura
+DRMain:Toggle("Book Aura", "DIsfoidsigre", function(t)
+bookaura = t
+    repeat task.wait(.5)
+        for _,v in pairs(bullshittable.LiveHintBook) do
+            pcall(function()
+                local mag = (lplr.HumanoidRootPart.Position - v.Parent.Cover2.Position).magnitude
+                if mag < bookrange then 
+                    fireproximityprompt(v)
+                end
+            end)
+        end
+    until not bookaura
+end)
+DRMain:Slider("Key Aura Range", "DIsfoidsigre", 0, 15,0,function(t)
+    t = keyrange
+end)
+DRMain:Slider("Lever Aura Range", "DIsfoidsigre", 0, 15,0,function(t)
+    t = bookrange
+end)
+DRMain:Slider("Book Aura Range", "DIsfoidsigre", 0, 15,0,function(t)
+    t = bookrange
+end)
+
+local DRVisual = DRwin:Tab("Visual", "http://www.roblox.com/asset/?id=6022668888")
+DRVisual:Toggle("FullBright", "SIHDfhiruehfu", function(z)
+    if z then
+        game:GetService("Lighting").Brightness = 2
+        game:GetService("Lighting").ClockTime = 14
+        game:GetService("Lighting").FogEnd = 100000
+        game:GetService("Lighting").GlobalShadows = false
+        game:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+    else
+        game:GetService("Lighting").Brightness = 3
+        game:GetService("Lighting").ClockTime = 20
+        game:GetService("Lighting").FogEnd = 1.1111111533265e+16
+        game:GetService("Lighting").GlobalShadows = true
+        game:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(0.5, 0.5, 0.5)
+    end
+end)
+
+local DRESP = DRwin:Tab("ESP", "http://www.roblox.com/asset/?id=6022668888")
+
+local keyesp
+DRESP:Toggle("Key ESP", "Ability to see the key through walls", function(t)
+keyesp = t
+    if keyesp then
+        repeat task.wait(.25)
+            for i,v in pairs(bullshittable.KeyObtain) do
+                pcall(function()
+                    if not v.Parent:FindFirstChild("Outline") then
+                        if keyesp then
+                            outline(v.Parent)
+                        end
+                    end
+                end)
+            end
+        until not keyesp
+    else
+        for i,v in pairs(bullshittable.KeyObtain) do
+            pcall(function()
+                v.Parent.Outline:Destroy()
+            end)
+        end
+    end
+end)
+
+local leveresp
+DRESP:Toggle("Lever ESP", "Ability to see lever through walls", function(t)
+leveresp = t
+    if leveresp then
+        repeat task.wait(.25)
+            for i,v in pairs(bullshittable.LeverForGate) do
+                pcall(function()
+                    if not v.Parent:FindFirstChild("Outline") then
+                        if leveresp then
+                            outline(v.Parent)
+                        end
+                    end
+                end)
+            end
+        until not leveresp
+    else
+        for i,v in pairs(bullshittable.LeverForGate) do
+            pcall(function()
+                v.Parent.Outline:Destroy()
+            end)
+        end
+    end
+end)
+
+local bookesp
+DRESP:Toggle("Book ESP", "Ability to see books through walls", function(t)
+bookesp = t
+    if bookesp then
+        repeat task.wait(.25)
+            for i,v in pairs(bullshittable.LiveHintBook) do
+                pcall(function()
+                    if not v.Parent:FindFirstChild("Outline") then
+                        if bookesp then
+                            outline(v.Parent)
+                        end
+                    end
+                end)
+            end
+        until not bookesp
+    else
+        for i,v in pairs(bullshittable.LiveHintBook) do
+            pcall(function()
+                v.Parent.Outline:Destroy()
+            end)
+        end
+    end
+end)
+
+local DRPlayer = DRwin:Tab("Player", "http://www.roblox.com/asset/?id=6022668888")
+DRPlayer:Toggle("Toggle", "Toggle WalkSpeed", function(t)
+    getgenv().wstog = t
+end)
+
+DRPlayer:Slider("Walkspeed", "Makes your faster.", 0, 45,16,function(t)
+    getgenv().ws = t
+end)
+task.spawn(function()
+    while task.wait() do
+        if getgenv().wstog then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().ws
+        end
+    end
+end)
 end
