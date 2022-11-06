@@ -405,4 +405,45 @@ task.spawn(function()
         end
     end
 end)
+
+-- Skala Simulator
+elseif game.PlaceId == 10972284553 then
+local SSwin = Flux:Window("MAMBA HUB", "Skala Simulator", Color3.fromRGB(0, 140, 0), Enum.KeyCode.RightShift)
+local AFtab = SSwin:Tab("AutoFarm", "http://www.roblox.com/asset/?id=6023426915")
+AFtab:Button("Main Auto Clicker", "Just Auto Clicker", function()
+while wait(0.01) do
+local Event = game:GetService("ReplicatedStorage").Click
+Event:FireServer()
 end
+end)
+AFtab:Button("Mega Auto Clicker", "Auto Clicker for Mega Click", function()
+while wait(0.1) do
+local Event = game:GetService("ReplicatedStorage").MegaClick
+Event:FireServer()
+end
+end)
+AFtab:Button("Main Auto Upgrade", "Auto Upgrade Rock Clicks", function()
+while wait(5) do
+local A_1 = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Upgrade
+local Event = game:GetService("ReplicatedStorage").ClickUpgrade
+Event:InvokeServer(A_1)
+end
+end)
+AFtab:Button("Mega Auto Upgrade", "Auto Upgrade Mega Clicks", function()
+while wait(5) do
+local A_1 = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Mega
+local Event = game:GetService("ReplicatedStorage").ClickUpgrade2
+Event:InvokeServer(A_1)
+end
+end)
+AFtab:Button("Free Turtles Spam", "Easy Income with free spam turtles", function()
+Flux:Notification("Attention! This feature may crash your game, use it at your own risk", "OK")
+while wait(0.01) do
+local A_1 = 3
+local A_2 = 0
+local Event = game:GetService("ReplicatedStorage").IncomeEvent
+Event:FireServer(A_1, A_2)
+end
+end)
+end
+
