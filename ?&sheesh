@@ -422,28 +422,71 @@ local Event = game:GetService("ReplicatedStorage").MegaClick
 Event:FireServer()
 end
 end)
-AFtab:Button("Main Auto Upgrade", "Auto Upgrade Rock Clicks", function()
+AFtab:Button("Free Turtles Spam", "Easy Income with free spam turtles", function()
+Flux:Notification("Attention! This feature may crash your game, use it at your own risk", "OK")
+while wait(0.01) do
+local A_1 = 3
+local A_2 = 1
+local Event = game:GetService("ReplicatedStorage").IncomeEvent
+Event:FireServer(A_1, A_2)
+end
+end)
+local UPtab = SSwin:Tab("Upgrades", "http://www.roblox.com/asset/?id=6023426915")
+UPtab:Button("Main Auto Upgrade", "Auto Upgrade Rock Clicks", function()
 while wait(5) do
 local A_1 = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Upgrade
 local Event = game:GetService("ReplicatedStorage").ClickUpgrade
 Event:InvokeServer(A_1)
 end
 end)
-AFtab:Button("Mega Auto Upgrade", "Auto Upgrade Mega Clicks", function()
+UPtab:Button("Mega Auto Upgrade", "Auto Upgrade Mega Clicks", function()
 while wait(5) do
 local A_1 = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Mega
 local Event = game:GetService("ReplicatedStorage").ClickUpgrade2
 Event:InvokeServer(A_1)
 end
 end)
-AFtab:Button("Free Turtles Spam", "Easy Income with free spam turtles", function()
-Flux:Notification("Attention! This feature may crash your game, use it at your own risk", "OK")
-while wait(0.01) do
-local A_1 = 3
-local A_2 = 0
-local Event = game:GetService("ReplicatedStorage").IncomeEvent
-Event:FireServer(A_1, A_2)
-end
+local VStab = SSwin:Tab("Visual", "http://www.roblox.com/asset/?id=6023426915")
+VStab:Textbox("Custom Picture", "Paste the id of your image into the textbox so that it appears in the picture on the wall", true, function(t)
+    print(t)
 end)
-end
+VStab:Button("Remove SKALA", "Just remove skala :)", function()
+game.Workspace.Skala:Destroy()
+end)
+local BGtab = SSwin:Tab("Badges", "http://www.roblox.com/asset/?id=6023426915")
+BGtab:Button("???", "Gives you Secret Badge", function(v)
+local IDToAward = 2129339308
+local BadgeService = game:GetService("BadgeService")
+    if v then
+        BadgeService:AwardBadge(Player.UserId, IDToAward)
+    end
+end)
 
+-- Millionaire Empire Tycoon
+elseif game.PlaceId == 6677985923 then
+    local METwin = Flux:Window("MAMBA HUB", "Millionaire Empire Tycoon", Color3.fromRGB(0, 140, 0), Enum.KeyCode.RightShift)
+    local MainTab = METwin:Tab("Main", "http://www.roblox.com/asset/?id=6023426915")
+    MainTab:Slider("Walkspeed", "Change your Walk Speed", 0, 100,16,function(t)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (t)
+    end)
+    MainTab:Slider("Jump Power", "Change your Jump Power", 0, 100,50,function(t)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = (t)
+    end)
+    local Auto = METwin:Tab("AutoFarm", "http://www.roblox.com/asset/?id=6023426915")
+    Auto:Button("Auto Rebirth", "Automatically makes rebirth", function()
+        Flux:Notification("Auto Rebirth Activated", "OK")
+        while wait(0.5) do
+        game.ReplicatedStorage.rebirthEvent:FireServer()
+    end
+end)
+    local Money = METwin:Tab("Money", "http://www.roblox.com/asset/?id=6023426915")
+    Money:Textbox("Custom Money", "write how much money you want.", true, function(t)
+        game.ReplicatedStorage.RespawnService:FireServer(t)
+    end)
+    Money:Button("Instant Rebirth", "You must have some money to use this feature.", function()
+        game.ReplicatedStorage.rebirthEvent:FireServer()
+    end)
+    Money:Button("Inf Money", "Get a huge amount of money", function()
+        game.ReplicatedStorage.RespawnService:FireServer(999999999999999999)
+    end)
+end
